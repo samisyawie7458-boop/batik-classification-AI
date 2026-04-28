@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Batik Classifier</title>
+    <style>
+      body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    
+    background: url("{{ url_for('static', filename='batik.png') }}") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* overlay biar tidak terlalu terang */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.5); /* gelap transparan */
+    z-index: -1;
+}
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            margin-top: 15px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #667eea;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        img {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f7f7f7;
+            border-radius: 10px;
+        }
+
+        .label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .confidence {
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎨 AI Batik Classifier</h2>
+    <p>Upload gambar batik dan lihat hasil prediksi AI</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <br>
+        <button type="submit">🔍 Analisis Batik</button>
+    </form>
+
+    {% if image_path %}
+        <img src="{{ image_path }}">
+
+        <div class="result">
+            <div class="label">Hasil: {{ result }}</div>
+            <div class="confidence">Akurasi: {{ confidence | round(2) }}%</div>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
